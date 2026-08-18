@@ -2,10 +2,305 @@
 <html lang="ja">
 <head>
 <meta charset="UTF-8">
-<title>はじめてのGitHub Pages</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>マヤ暦鑑定 | Amy</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@500;700&family=Noto+Sans+JP:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --navy:#1b2340;
+    --navy-deep:#12172b;
+    --gold:#c9a227;
+    --gold-light:#e6c85c;
+    --cream:#faf6ee;
+    --terracotta:#bd5b3a;
+    --text:#2b2b2b;
+  }
+  *{box-sizing:border-box;margin:0;padding:0;}
+  html{scroll-behavior:smooth;}
+  body{
+    font-family:"Noto Sans JP",sans-serif;
+    color:var(--text);
+    background:var(--cream);
+    line-height:1.8;
+  }
+  h1,h2,h3{font-family:"Noto Serif JP",serif;}
+  a{text-decoration:none;color:inherit;}
+  img{max-width:100%;display:block;}
+
+  /* Header */
+  header{
+    position:fixed;top:0;left:0;right:0;
+    display:flex;justify-content:space-between;align-items:center;
+    padding:18px 6%;
+    background:rgba(18,23,43,0.92);
+    backdrop-filter:blur(6px);
+    z-index:100;
+  }
+  .logo{color:var(--gold-light);font-size:1.3rem;letter-spacing:0.1em;font-weight:700;}
+  nav ul{display:flex;gap:28px;list-style:none;}
+  nav a{color:#f1ece0;font-size:0.9rem;letter-spacing:0.05em;transition:color .2s;}
+  nav a:hover{color:var(--gold-light);}
+  .nav-toggle{display:none;flex-direction:column;gap:5px;cursor:pointer;background:none;border:none;}
+  .nav-toggle span{width:24px;height:2px;background:#f1ece0;}
+
+  /* Hero */
+  .hero{
+    min-height:100vh;
+    display:flex;flex-direction:column;justify-content:center;align-items:center;
+    text-align:center;
+    background:
+      radial-gradient(circle at 30% 20%, rgba(201,162,39,0.25), transparent 45%),
+      radial-gradient(circle at 75% 70%, rgba(189,91,58,0.2), transparent 45%),
+      linear-gradient(160deg, var(--navy-deep), var(--navy) 70%);
+    color:#f1ece0;
+    padding:120px 6% 80px;
+  }
+  .hero .eyebrow{
+    letter-spacing:0.3em;font-size:0.8rem;color:var(--gold-light);margin-bottom:18px;
+  }
+  .hero h1{
+    font-size:clamp(2rem,5vw,3.4rem);
+    margin-bottom:22px;
+  }
+  .hero p{
+    max-width:560px;
+    color:#d8d3c4;
+    margin-bottom:36px;
+  }
+  .btn{
+    display:inline-block;
+    padding:14px 38px;
+    border-radius:999px;
+    background:linear-gradient(120deg,var(--gold),var(--gold-light));
+    color:var(--navy-deep);
+    font-weight:700;
+    letter-spacing:0.05em;
+    box-shadow:0 8px 24px rgba(201,162,39,0.35);
+    transition:transform .2s;
+  }
+  .btn:hover{transform:translateY(-2px);}
+
+  /* Section common */
+  section{padding:110px 6%;}
+  .section-head{text-align:center;margin-bottom:56px;}
+  .section-head .eyebrow{
+    letter-spacing:0.3em;font-size:0.8rem;color:var(--terracotta);display:block;margin-bottom:12px;
+  }
+  .section-head h2{font-size:clamp(1.6rem,3vw,2.2rem);}
+
+  /* About */
+  #about{background:var(--cream);}
+  .about-grid{
+    display:grid;grid-template-columns:1fr 1fr;gap:60px;align-items:center;max-width:1000px;margin:0 auto;
+  }
+  .about-visual{
+    aspect-ratio:1/1;border-radius:50%;
+    background:radial-gradient(circle at 35% 30%, var(--gold-light), var(--terracotta) 70%, var(--navy-deep));
+    box-shadow:0 20px 50px rgba(0,0,0,0.15);
+  }
+  .about-text p{margin-bottom:16px;color:#4a4a4a;}
+
+  /* Menu */
+  #menu{background:var(--navy-deep);color:#f1ece0;}
+  #menu .section-head h2{color:#f1ece0;}
+  .menu-grid{
+    display:grid;grid-template-columns:repeat(3,1fr);gap:32px;max-width:1100px;margin:0 auto;
+  }
+  .menu-card{
+    background:rgba(255,255,255,0.04);
+    border:1px solid rgba(201,162,39,0.3);
+    border-radius:16px;
+    padding:38px 28px;
+    text-align:center;
+    transition:transform .25s, border-color .25s;
+  }
+  .menu-card:hover{transform:translateY(-6px);border-color:var(--gold-light);}
+  .menu-card h3{color:var(--gold-light);font-size:1.15rem;margin-bottom:14px;}
+  .menu-card .price{font-size:1.6rem;font-weight:700;margin:16px 0;color:#f1ece0;}
+  .menu-card .price span{font-size:0.85rem;font-weight:400;color:#bcb6a4;}
+  .menu-card p{color:#c9c4b4;font-size:0.92rem;}
+
+  /* Profile */
+  #profile{background:var(--cream);}
+  .profile-grid{
+    display:grid;grid-template-columns:220px 1fr;gap:48px;max-width:900px;margin:0 auto;align-items:start;
+  }
+  .profile-photo{
+    width:220px;height:220px;border-radius:50%;
+    background:linear-gradient(135deg,var(--gold-light),var(--terracotta));
+  }
+  .profile-text h3{margin-bottom:10px;font-size:1.3rem;}
+  .profile-text .kin{color:var(--terracotta);font-size:0.9rem;margin-bottom:18px;letter-spacing:0.05em;}
+  .profile-text p{color:#4a4a4a;margin-bottom:14px;}
+
+  /* Voice */
+  #voice{background:#f1ece0;}
+  .voice-grid{
+    display:grid;grid-template-columns:repeat(3,1fr);gap:28px;max-width:1100px;margin:0 auto;
+  }
+  .voice-card{
+    background:#fff;border-radius:14px;padding:30px;box-shadow:0 10px 30px rgba(0,0,0,0.06);
+  }
+  .voice-card .stars{color:var(--gold);margin-bottom:14px;letter-spacing:2px;}
+  .voice-card p{color:#4a4a4a;font-size:0.92rem;margin-bottom:16px;}
+  .voice-card .name{font-size:0.85rem;color:#9a9384;text-align:right;}
+
+  /* Contact */
+  #contact{
+    background:linear-gradient(160deg, var(--navy), var(--navy-deep));
+    color:#f1ece0;text-align:center;
+  }
+  #contact .section-head h2{color:#f1ece0;}
+  #contact p{max-width:480px;margin:0 auto 36px;color:#d8d3c4;}
+  .contact-info{display:flex;justify-content:center;gap:48px;flex-wrap:wrap;margin-top:40px;font-size:0.95rem;color:#e6dfcb;}
+
+  footer{
+    background:var(--navy-deep);color:#8f8a7a;text-align:center;
+    padding:28px 6%;font-size:0.8rem;
+  }
+
+  @media (max-width:820px){
+    .about-grid,.profile-grid{grid-template-columns:1fr;}
+    .menu-grid,.voice-grid{grid-template-columns:1fr;}
+    nav ul{
+      position:absolute;top:100%;left:0;right:0;
+      flex-direction:column;background:var(--navy-deep);
+      padding:20px 6%;gap:18px;
+      display:none;
+    }
+    nav.open ul{display:flex;}
+    .nav-toggle{display:flex;}
+  }
+</style>
 </head>
 <body>
-  <h1>こんにちは!</h1>
-  <p>これは GitHub Pages の練習用ページです。</p>
+
+<header>
+  <a class="logo" href="#top">マヤ暦鑑定 Amy</a>
+  <nav id="nav">
+    <ul>
+      <li><a href="#about">鑑定について</a></li>
+      <li><a href="#menu">メニュー</a></li>
+      <li><a href="#profile">プロフィール</a></li>
+      <li><a href="#voice">お客様の声</a></li>
+      <li><a href="#contact">お問い合わせ</a></li>
+    </ul>
+  </nav>
+  <button class="nav-toggle" id="navToggle" aria-label="メニュー">
+    <span></span><span></span><span></span>
+  </button>
+</header>
+
+<section class="hero" id="top">
+  <span class="eyebrow">MAYAN CALENDAR READING</span>
+  <h1>生まれ持った本来の自分を、<br>マヤ暦で知る。</h1>
+  <p>古代マヤ文明に伝わる暦を通して、あなたの才能・使命・人との relationship の傾向を紐解きます。初めての方もお気軽にどうぞ。</p>
+  <a class="btn" href="#contact">鑑定を予約する</a>
+</section>
+
+<section id="about">
+  <div class="section-head">
+    <span class="eyebrow">ABOUT</span>
+    <h2>マヤ暦鑑定とは</h2>
+  </div>
+  <div class="about-grid">
+    <div class="about-visual"></div>
+    <div class="about-text">
+      <p>マヤ暦は、古代マヤ文明で使われていた260日周期の暦(ツォルキン暦)をもとに、生年月日から「KIN(キン)」と呼ばれる数字を割り出し、その人の資質や才能、人生のサイクルを読み解く鑑定方法です。</p>
+      <p>占いというよりも、「本来の自分を知り、日々の選択に活かすためのツール」として、自己理解やキャリア、人間関係の相談に活用されています。</p>
+      <p>当鑑定では、あなたのKINナンバーから性格・強み・向いている役割・相性の良い相手などを、わかりやすくお伝えします。</p>
+    </div>
+  </div>
+</section>
+
+<section id="menu">
+  <div class="section-head">
+    <span class="eyebrow">MENU</span>
+    <h2>鑑定メニュー</h2>
+  </div>
+  <div class="menu-grid">
+    <div class="menu-card">
+      <h3>ライト鑑定</h3>
+      <div class="price">¥5,000<span> / 30分</span></div>
+      <p>あなたのKINナンバーと基本的な資質を中心にお伝えする、はじめての方向けのプランです。</p>
+    </div>
+    <div class="menu-card">
+      <h3>じっくり鑑定</h3>
+      <div class="price">¥9,000<span> / 60分</span></div>
+      <p>資質に加え、人間関係や仕事運、今のサイクルでの過ごし方まで深く掘り下げます。</p>
+    </div>
+    <div class="menu-card">
+      <h3>オンライン鑑定</h3>
+      <div class="price">¥7,000<span> / 45分</span></div>
+      <p>ビデオ通話で全国どこからでも受けられるオンライン専用プランです。</p>
+    </div>
+  </div>
+</section>
+
+<section id="profile">
+  <div class="section-head">
+    <span class="eyebrow">PROFILE</span>
+    <h2>プロフィール</h2>
+  </div>
+  <div class="profile-grid">
+    <div class="profile-photo"></div>
+    <div class="profile-text">
+      <h3>Amy</h3>
+      <div class="kin">マヤ暦鑑定士</div>
+      <p>マヤ暦との出会いをきっかけに、自分自身の人生の見方が大きく変わった経験から、鑑定士としての活動を始めました。</p>
+      <p>これまで(鑑定人数)名以上の方の鑑定を担当。「難しい専門用語を使わず、日常に活かせる言葉で伝える」ことを大切にしています。</p>
+      <p>※このプロフィールは仮の文章です。実際の経歴・実績に書き換えてください。</p>
+    </div>
+  </div>
+</section>
+
+<section id="voice">
+  <div class="section-head">
+    <span class="eyebrow">VOICE</span>
+    <h2>お客様の声</h2>
+  </div>
+  <div class="voice-grid">
+    <div class="voice-card">
+      <div class="stars">★★★★★</div>
+      <p>「自分でも気づいていなかった強みを言葉にしてもらえて、仕事の選び方に自信が持てるようになりました。」</p>
+      <div class="name">30代 女性</div>
+    </div>
+    <div class="voice-card">
+      <div class="stars">★★★★★</div>
+      <p>「難しい話ではなく、日常のエピソードに例えて説明してくれたのでとてもわかりやすかったです。」</p>
+      <div class="name">40代 男性</div>
+    </div>
+    <div class="voice-card">
+      <div class="stars">★★★★★</div>
+      <p>「パートナーとの相性について相談しましたが、関係を見直すいいきっかけになりました。」</p>
+      <div class="name">20代 女性</div>
+    </div>
+  </div>
+</section>
+
+<section id="contact">
+  <div class="section-head">
+    <span class="eyebrow">CONTACT</span>
+    <h2>お問い合わせ・ご予約</h2>
+  </div>
+  <p>鑑定のご予約やご質問は、下記の連絡先からお気軽にご連絡ください。</p>
+  <a class="btn" href="mailto:example@example.com">メールで問い合わせる</a>
+  <div class="contact-info">
+    <span>Email: example@example.com</span>
+    <span>受付時間: 10:00〜18:00(不定休)</span>
+  </div>
+</section>
+
+<footer>
+  &copy; 2026 マヤ暦鑑定 Amy. This is a practice page for learning GitHub Pages.
+</footer>
+
+<script>
+  document.getElementById('navToggle').addEventListener('click', function(){
+    document.getElementById('nav').classList.toggle('open');
+  });
+</script>
+
 </body>
 </html>
